@@ -1,0 +1,81 @@
+For this assignment your client has a house with the following feature set: 
+[11.95, 0.00, 18.100, 0, 0.6590, 5.6090, 90.00, 1.385, 24, 680.0, 20.20, 332.09, 12.13]. 
+To get started, use the example scikit implementation. You will have to modify 
+the code slightly to get the file up and running.
+
+
+Questions and Report Structure
+1) Statistical Analysis and Data Exploration
+
+    Number of data points?  
+
+        506
+    
+    Number of features?  
+
+        13
+
+    Minimum and maximum housing prices?   
+
+        min=5, max=50
+    
+    Mean and median Boston housing prices?  
+
+        mean=22, median=21
+    
+    Standard deviation?  
+
+        std=9
+
+2) Evaluating Model Performance
+
+    Which measure of model performance is best to use for predicting Boston housing data? Why do you think this measurement most appropriate? Why might the other measurements not be appropriate here?
+
+        I ended up using mean squared error as my measure of model performance, but I think R2 score could also be a good metric, and I did try it and was pretty happy with the results.  Mean squared
+        error is a very effective measure for regression performance, especially for data sets that do not contain large outliers.  I think median absolute error would not be appropriate for our data 
+        set because there are no obvious outliers in the data.  Also, I don't think the standard deviation is high enough to make explained_variance_score a good measure (the coefficient of varation 
+        is 9/22 which is much smaller than 1).
+
+    Why is it important to split the data into training and testing data? What happens if you do not do this?
+    
+        If all the data is used for training there will be no way to validate that the model is performing well.  As such, the model may appear to be very effective but will perform poorly on new data.
+        
+    Which cross validation technique do you think is most appropriate and why?
+    
+        I think randomizing the testing and training sets and using multiple runs and various sizes for the training/testing data is the best cross validation method for our data set.  We 
+        have a limited amount of data (only about 500 data points), so setting aside a third portion of the data specifically for cross validation would limit our ability to properly train our model 
+        (since we would have less data to train, and then test, our model).
+        
+    What does grid search do and why might you want to use it?
+        
+        Grid search allows you to run training on different combinations of model parameters, and to then test the model with the testing data to measure the performance of the given combination of 
+        parameters.  It's an easy way to let the computer determine the optimal set of parameters for any given model.
+
+3) Analyzing Model Performance
+
+    Look at all learning curve graphs provided. What is the general trend of training and testing error as training size increases?
+       
+        Generally speaking as the training size increases, the training error increases very slightly but levels off, while the testing error steadily decreases as training size increases until it, too,
+        appears to level off.
+       
+    Look at the learning curves for the decision tree regressor with max depth 1 and 10 (first and last learning curve graphs). When the model is fully trained does it suffer from either high bias/underfitting or high variance/overfitting?
+    
+        It's not clear to me that the regressor is suffering from either under- or overfitting between max depth of 1 and 10.  The testing error is much smaller at max depth 10 than at 1, which is good.
+        The performance does appear to level off at around a max depth of 4 or 5, so increasing the depth does not appear to be helpful beyond that point.
+        
+    Look at the model complexity graph. How do the training and test error relate to increasing model complexity? Based on this relationship, which model (max depth) best generalizes the dataset and why?
+ 
+        The training error decreases as model complexity (max depth) increases, getting asymptotically close to 0.  The testing error decreases sharply at first, but quickly plateaus and 
+        then starts to increase slightly as model complexity increases.  It appears to me that a max depth of about 4 best genearlizes the dataset, as that is the minimum of the testing error curve in the
+        model complexity graph.  After a max depth of about 4, the testing error increases.
+        
+4) Model Prediction
+
+    Model makes predicted housing price with detailed model parameters
+    
+        House: [11.95, 0.0, 18.1, 0, 0.659, 5.609, 90.0, 1.385, 24, 680.0, 20.2, 332.09, 12.13]
+        Prediction: [ 19.93372093]
+
+    Compare prediction to earlier statistics
+
+        Price comes out to 19.93, which is very close to the median house price for Boston.
